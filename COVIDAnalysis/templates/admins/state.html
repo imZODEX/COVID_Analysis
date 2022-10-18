@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'admins/css/dashboard.css' %}" type="text/css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css"
+        integrity="sha384-X8QTME3FCg1DLb58++lPvsjbQoCT9bp3MsUU3grbIny/3ZwUJkRNO8NPW6zqzuW9" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="analytics-outline"></ion-icon>
+                        </span>
+                        <span class="title">Co-Analysis</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admins:wall' %}">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="location-outline"></ion-icon>
+                        </span>
+                        <span class="title">{{st.state}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admins:approvalpage' %}">
+                        <span class="icon">
+                            <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+                        </span>
+                        <span class="title">User Approval</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admins:uploaddata' %}">
+                        <span class="icon">
+                            <ion-icon name="cloud-upload-outline"></ion-icon>
+                        </span>
+                        <span class="title">Upload Data</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admins:reset' %}">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--main-->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!--search-->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search Here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+                <!--UserImg-->
+                <div class="user">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                </div>
+            </div>
+
+            <!--cards-->
+            <div class="cardbox">
+                <div class="card">
+                    <div>
+                        <div class="number">{{Tested}} M</div>
+                        <div class="cardName">Tested</div>
+                    </div>
+                    <div class="iconbox">
+                        <ion-icon name="medkit-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="number">{{Confirmed}} M</div>
+                        <div class="cardName">Confirmed</div>
+                    </div>
+                    <div class="iconbox">
+                        <ion-icon name="swap-vertical-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="number">{{Recovered}} M</div>
+                        <div class="cardName">Recovered</div>
+                    </div>
+                    <div class="iconbox">
+                        <ion-icon name="fitness-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="number">{{Death}} M</div>
+                        <div class="cardName">Death</div>
+                    </div>
+                    <div class="iconbox">
+                        <ion-icon name="heart-dislike-circle-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!--Approval-->
+            <div class="details">
+                {% if data_error %}
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        <h2>{{ data_error }}</h2>
+                    </div>
+                </div>
+                {% else %}
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        <h2>{{st.state}}</h2>
+                        <h2>Active Cases: {{Active}}</h2>
+                    </div>
+                    {% if Active > 100000 %}
+                    <div class="cardheader">
+                        <marquee direction="left">
+                            <h2 style="color: red;"> Red Zone Area (COVID Hotspot). Lockdown imposed 24*7. Use Proper
+                                precautions. Maintain Social Distancing and use masks.</h2>
+                        </marquee>
+                        
+                    </div>
+                    {% else %}
+                    {% if Active > 50000 %}
+                    <div class="cardheader">
+                        <marquee direction="Left">
+                            <h2 style="color: rgb(249, 138, 47);"> Orange Zone Area. Lockdown is imposed for public. Only
+                                authorized person can go out. Use Proper precautions. Maintain Social Distancing and use
+                                masks.</h2>
+                        </marquee>
+                        
+                    </div>
+                    {% else %}
+                    {% if Active > 25000 %}
+                    <div class="cardheader">
+                        <marquee direction="left">
+                            <h2 style="color: rgb(255, 251, 1);"> Yellow Zone Area. Lockdown is imposed at nights. Use
+                                Proper precautions. Maintain Social Distancing and use masks.</h2>
+                        </marquee>
+                        
+                    </div>
+                    {%else%}
+                    <div class="cardheader">
+                        <marquee direction="left">
+                            <h2 style="color: rgb(0, 255, 42);"> Green Zone Area. Use Proper precautions. Maintain Social
+                                Distancing and use masks.</h2>
+                        </marquee>
+                        
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div1}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div2}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div3}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div4}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div5}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div6}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div7}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div10}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div11}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                <div class="recentapproval">
+                    <div class="cardheader">
+                        {% autoescape off %}
+                        {{plot_div12}}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        // Menu Toggle
+        let toggle = document.querySelector('.toggle');
+        let navigation = document.querySelector('.navigation');
+        let main = document.querySelector('.main');
+
+        toggle.onclick = function () {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+
+        }
+
+        //add hovered class in selected list item 
+        let list = document.querySelectorAll('.navigation li');
+        function activelink() {
+            list.forEach((item) =>
+                item.classList.remove('hovered'));
+            this.classList.add('hovered');
+        }
+        list.forEach((item) =>
+            item.addEventListener('mouseover', activelink)
+        )
+    </script>
+</body>
+
+</html>

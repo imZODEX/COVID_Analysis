@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="{% static 'auths/register_stylee.css' %}">
+</head>
+<body>
+    <div class="main">
+        <main>
+            
+            <section class="flex info">
+                <h1>Welcome to 
+                    <span>
+                        <div class="waviy animate__animated animate__backInDown">
+                            <span style="--i:1">C</span>
+                            <span style="--i:1">o</span>
+                            <span style="--i:1">v</span>
+                            <span style="--i:1">i</span>
+                            <span style="--i:1">d</span>
+                            <span style="--i:1"> </span>
+                            <span style="--i:1">A</span>
+                            <span style="--i:1">n</span>
+                            <span style="--i:1">a</span>
+                            <span style="--i:1">l</span>
+                            <span style="--i:1">y</span>
+                            <span style="--i:1">s</span>
+                            <span style="--i:1">i</span>
+                            <span style="--i:1">s</span>
+                        </div>
+                    </span>
+                    System...</h1>
+            </section>
+
+            <section style="overlow-x:hidden" class="flex form-section flex-column">
+                <h1 class="form-header animate__animated animate__bounceInRight">Register here</h1>
+                <form id="form"action="{% url 'auths:register' %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="username">
+                        <!-- <label for="name">Name</label> -->
+                        <input type="text" name="name" placeholder="Enter Name" class="form-input animate__animated animate__bounceInLeft" required />
+                        <!-- <input type="text" placeholder="Enter Username" class="form-input" required> -->
+                    </div>
+                    <div class="email">
+                        <!-- <label for="email">Email</label> -->
+                        <input type="text" name="email" placeholder="Enter Email" class="form-input animate__animated animate__bounceInRight" required />
+                        <!-- <input type="email" placeholder="Enter Email" class="form-input" required> -->
+                    </div>
+                    <div class="state">
+                        <!-- <label for="state">State</label> -->
+                        <select name="state" id="state" class="select-state animate__animated animate__bounceInLeft"required>
+                            <option value="" disabled selected hidden>Please select a State</option>
+                            {% for entry in state_list %}
+                            {% if entry.state != "India" %}
+                            <option>{{entry.state}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                        <!-- <select name="cars" class="select-state" required>
+                            <option value="" disabled selected hidden>Select State</option>
+                            <option value="delhi">Delhi</option>
+                            <option value="wb">West Bengal</option>
+                            <option value="up">Uttar Pradesh</option>
+                            <option value="tn">Tamin Nadu</option>
+                            <option value="tl">Telangana</option>
+                        </select> -->
+                    </div>
+                    
+                    <div class="password">
+                        <!-- <label for="password">Password</label> -->
+                        <input type="password" name="password" placeholder="Enter Password" class="form-input animate__animated animate__bounceInRight" required />
+                        <!-- <input type="password" placeholder="Enter Password" class="form-input" required> -->
+                    </div>
+                    <div class="con-password">
+                        <!-- <label for="confirm_password">Confirm Password</label> -->
+                        <input type="password" name="confirm_password" placeholder="Enter Confirm password" class="form-input animate__animated animate__bounceInLeft"required />
+                        <!-- <input type="password" placeholder="Confirm Password" class="form-input" required> -->
+                    </div>
+                    <div class="error-password">
+
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if "register" in message.tags %}
+                        <span class="error-password">{{ message }}</span>
+                        <br>
+                        <br>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="enter">
+                        <a href="{% url 'auths:register' %}"><button type="submit"
+                            class="btn btn-register animate__animated animate__bounceInRight">Create Account</button></a>
+                        <div class="divider animate__animated animate__bounceInLeft">Already have an account?</div>
+                        <a href="{% url 'auths:login' %}"><button type="button"
+                            class="btn btn-login animate__animated animate__bounceInRight">Login</button></a>
+                        
+                    </div>
+                </form>
+    
+            </section>
+        </main>
+    </div>
+    
+</body>
+</html>
