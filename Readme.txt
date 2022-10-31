@@ -22,3 +22,5 @@ Admin view (We will make admins)
 2.	The home page will show dashboard of Covid Analysis of all state and admin can also see for each state only and admin can dwownload.
 3.	Admin need to approve the requests of newly register users and can decline also.
 4.  Admin can upload the data in form of excel for each state and for all state.
+
+You can also use email server using proton SMTP server that is also in this.
